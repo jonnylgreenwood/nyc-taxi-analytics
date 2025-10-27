@@ -36,7 +36,7 @@ CREATE OR REPLACE TABLE l1.fact_yellow_trips (
 
     _flag_null_passenger BOOLEAN,
     _flag_negative_fare BOOLEAN,
-    _flag_invalid_distance BOOLEAN
+    _flag_impossible_distance BOOLEAN
 );
 
 CREATE OR REPLACE TABLE l1.fact_green_trips (
@@ -71,7 +71,7 @@ CREATE OR REPLACE TABLE l1.fact_green_trips (
 
     _flag_null_passenger BOOLEAN,
     _flag_negative_fare BOOLEAN,
-    _flag_invalid_distance BOOLEAN
+    _flag_impossible_distance BOOLEAN
 );
 CREATE OR REPLACE TABLE l1.fact_fhv_trips (
     vendor_id INTEGER,
@@ -105,7 +105,7 @@ CREATE OR REPLACE TABLE l1.fact_fhv_trips (
 
     _flag_null_passenger BOOLEAN,
     _flag_negative_fare BOOLEAN,
-    _flag_invalid_distance BOOLEAN
+    _flag_impossible_distance BOOLEAN
 );
 
 SELECT * FROM l1.fact_yellow_trips;
