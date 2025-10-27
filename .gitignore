@@ -1,1 +1,4 @@
-/data
+.venv/
+data/raw/
+__pycache__/
+**._**
