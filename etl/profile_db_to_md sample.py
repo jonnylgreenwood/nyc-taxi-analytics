@@ -26,8 +26,8 @@ def profile_table(con, full_name):
 
     for _, row in cols_df.iterrows():
         col = row["column_name"]
-        s = con.execute(f"SELECT {col} FROM {full_name}").fetch_df()[col]
-        # s = con.execute(f"SELECT {col} FROM {full_name} LIMIT 50000").fetch_df()[col]
+        # s = con.execute(f"SELECT {col} FROM {full_name}").fetch_df()[col]
+        s = con.execute(f"SELECT {col} FROM {full_name} LIMIT 50000").fetch_df()[col]
 
         pd_type = str(s.dtype)
         sql_type, size = PANDAS_TO_SQL.get(pd_type, ("UNKNOWN", None))
