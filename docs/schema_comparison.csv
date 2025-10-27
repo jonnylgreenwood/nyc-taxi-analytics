@@ -1,0 +1,33 @@
+column_name,fhv,green,yellow
+Affiliated_base_number,VARCHAR,,
+Airport_fee,,,DOUBLE
+DOLocationID,,"BIGINT, INTEGER","BIGINT, INTEGER"
+DOlocationID,"BIGINT, DOUBLE",,
+PULocationID,,"BIGINT, INTEGER","BIGINT, INTEGER"
+PUlocationID,"BIGINT, DOUBLE",,
+RatecodeID,,"BIGINT, DOUBLE","BIGINT, DOUBLE"
+SR_Flag,"BIGINT, DOUBLE, INTEGER",,
+VendorID,,"BIGINT, INTEGER","BIGINT, INTEGER"
+airport_fee,,,"DOUBLE, INTEGER"
+cbd_congestion_fee,,DOUBLE,DOUBLE
+congestion_surcharge,,"DOUBLE, INTEGER","DOUBLE, INTEGER"
+dispatching_base_num,VARCHAR,,
+dropOff_datetime,TIMESTAMP,,
+ehail_fee,,"DOUBLE, INTEGER",
+extra,,DOUBLE,DOUBLE
+fare_amount,,DOUBLE,DOUBLE
+improvement_surcharge,,"DOUBLE, INTEGER",DOUBLE
+lpep_dropoff_datetime,,TIMESTAMP,
+lpep_pickup_datetime,,TIMESTAMP,
+mta_tax,,DOUBLE,DOUBLE
+passenger_count,,"BIGINT, DOUBLE","BIGINT, DOUBLE"
+payment_type,,"BIGINT, DOUBLE",BIGINT
+pickup_datetime,TIMESTAMP,,
+store_and_fwd_flag,,VARCHAR,VARCHAR
+tip_amount,,DOUBLE,DOUBLE
+tolls_amount,,DOUBLE,DOUBLE
+total_amount,,DOUBLE,DOUBLE
+tpep_dropoff_datetime,,,TIMESTAMP
+tpep_pickup_datetime,,,TIMESTAMP
+trip_distance,,DOUBLE,DOUBLE
+trip_type,,"BIGINT, DOUBLE",
