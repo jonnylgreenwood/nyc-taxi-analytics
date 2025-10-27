@@ -1,0 +1,2 @@
+delete all ._ files:
+find . -type f -name '._*' -delete
