@@ -5,7 +5,7 @@ import re
 
 # --- CONFIG ---
 DB_PATH = "etl/analytics.duckdb"
-SCHEMAS_TO_PROFILE = ["l0", "l1", "dq"]  # control what layers you want to export
+SCHEMAS_TO_PROFILE = ["l0", "l1", "l2", "dq"]  # control what layers you want to export
 
 wiki_path = Path("docs/db_profiles")
 wiki_path.mkdir(parents=True, exist_ok=True)
