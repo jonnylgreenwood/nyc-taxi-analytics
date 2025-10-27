@@ -2,7 +2,7 @@ import duckdb
 import pandas as pd
 
 # Connect to your persistent DB
-con = duckdb.connect('analytics.db')
+con = duckdb.connect('etl/analytics.duckdb')
 
 # Load ingestion plan
 plan = con.execute("""
