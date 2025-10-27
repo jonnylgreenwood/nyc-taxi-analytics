@@ -29,7 +29,13 @@ SELECT
     _ingestion_month,
     _flag_null_passenger,
     _flag_negative_fare,
-    _flag_invalid_distance
+
+    DATE_TRUNC('day', pickup_ts) AS pickup_date,
+    EXTRACT(hour FROM pickup_ts) AS pickup_hour,
+    EXTRACT(dow FROM pickup_ts) AS pickup_dayofweek,
+    DATE_TRUNC('day', dropoff_ts) AS dropoff_date,
+    (EXTRACT(epoch FROM dropoff_ts) - EXTRACT(epoch FROM pickup_ts)) / 60 AS trip_duration_minutes
+
 FROM l1.fact_yellow_trips
 
 UNION ALL
@@ -60,11 +66,16 @@ SELECT
     dispatch_base_id,
     ehail_fee,
     hail_service_flag,
-    'yellow' AS source_type,
+    'green' AS source_type,
     _ingestion_month,
     _flag_null_passenger,
     _flag_negative_fare,
-    _flag_invalid_distance
+
+    DATE_TRUNC('day', pickup_ts) AS pickup_date,
+    EXTRACT(hour FROM pickup_ts) AS pickup_hour,
+    EXTRACT(dow FROM pickup_ts) AS pickup_dayofweek,
+    DATE_TRUNC('day', dropoff_ts) AS dropoff_date,
+    (EXTRACT(epoch FROM dropoff_ts) - EXTRACT(epoch FROM pickup_ts)) / 60 AS trip_duration_minutes
 FROM l1.fact_green_trips
 
 UNION ALL
@@ -95,9 +106,14 @@ SELECT
     dispatch_base_id,
     ehail_fee,
     hail_service_flag,
-    'yellow' AS source_type,
+    'fhv' AS source_type,
     _ingestion_month,
     _flag_null_passenger,
     _flag_negative_fare,
-    _flag_invalid_distance
+
+    DATE_TRUNC('day', pickup_ts) AS pickup_date,
+    EXTRACT(hour FROM pickup_ts) AS pickup_hour,
+    EXTRACT(dow FROM pickup_ts) AS pickup_dayofweek,
+    DATE_TRUNC('day', dropoff_ts) AS dropoff_date,
+    (EXTRACT(epoch FROM dropoff_ts) - EXTRACT(epoch FROM pickup_ts)) / 60 AS trip_duration_minutes
 FROM l1.fact_fhv_trips;

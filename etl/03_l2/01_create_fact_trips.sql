@@ -32,5 +32,9 @@ CREATE OR REPLACE TABLE l2.fact_trips (
 
     _flag_null_passenger BOOLEAN,
     _flag_negative_fare BOOLEAN,
-    _flag_invalid_distance BOOLEAN
+    pickup_date DATE,
+    pickup_hour INTEGER,
+    pickup_dayofweek INTEGER,
+    dropoff_date DATE,
+    trip_duration_minutes INTEGER
 );
