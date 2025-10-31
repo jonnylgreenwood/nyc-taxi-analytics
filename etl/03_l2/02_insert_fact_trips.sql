@@ -1,119 +1,26 @@
-INSERT INTO l2.fact_trips
+CREATE OR REPLACE TABLE l2.fact_trips AS
+WITH unified AS (
+    SELECT *, 'yellow' AS source_type FROM l1.fact_yellow_trips
+    UNION ALL
+    SELECT *, 'green'  AS source_type FROM l1.fact_green_trips
+    UNION ALL
+    SELECT *, 'fhv'    AS source_type FROM l1.fact_fhv_trips
+),
+derived AS (
+    SELECT
+        *,
+        DATE_TRUNC('day', pickup_ts) AS pickup_date,
+        EXTRACT(hour FROM pickup_ts) AS pickup_hour,
+        EXTRACT(dow FROM pickup_ts)  AS pickup_dayofweek,
+        DATE_TRUNC('day', dropoff_ts) AS dropoff_date,
+        (EXTRACT(epoch FROM dropoff_ts) - EXTRACT(epoch FROM pickup_ts)) / 60 AS trip_duration_minutes
+    FROM unified
+)
 SELECT
-    vendor_id,
-    affiliated_base_id,
-    pickup_ts,
-    dropoff_ts,
-    passenger_count,
-    trip_distance_mi,
-    rate_code_id,
-    shared_ride_flag,
-    store_and_fwd_flag,
-    pickup_location_id,
-    dropoff_location_id,
-    payment_type,
-    fare_amount,
-    extra_fees,
-    mta_tax,
-    tip_amount,
-    tolls_amount,
-    total_amount,
-    improvement_surcharge,
-    congestion_surcharge,
-    cbd_congestion_fee,
-    airport_fee,
-    dispatch_base_id,
-    ehail_fee,
-    hail_service_flag,
-    'yellow' AS source_type,
-    _ingestion_month,
-    _flag_null_passenger,
-    _flag_negative_fare,
+    *,
+    -- Core business rules
+    COALESCE(NULLIF(passenger_count,0),1) AS passenger_count,
+    (trip_distance_mi / NULLIF(trip_duration_minutes,0)) * 60 AS speed_mph,
+FROM derived
 
-    DATE_TRUNC('day', pickup_ts) AS pickup_date,
-    EXTRACT(hour FROM pickup_ts) AS pickup_hour,
-    EXTRACT(dow FROM pickup_ts) AS pickup_dayofweek,
-    DATE_TRUNC('day', dropoff_ts) AS dropoff_date,
-    (EXTRACT(epoch FROM dropoff_ts) - EXTRACT(epoch FROM pickup_ts)) / 60 AS trip_duration_minutes
-
-FROM l1.fact_yellow_trips
-
-UNION ALL
-
-SELECT
-    vendor_id,
-    affiliated_base_id,
-    pickup_ts,
-    dropoff_ts,
-    passenger_count,
-    trip_distance_mi,
-    rate_code_id,
-    shared_ride_flag,
-    store_and_fwd_flag,
-    pickup_location_id,
-    dropoff_location_id,
-    payment_type,
-    fare_amount,
-    extra_fees,
-    mta_tax,
-    tip_amount,
-    tolls_amount,
-    total_amount,
-    improvement_surcharge,
-    congestion_surcharge,
-    cbd_congestion_fee,
-    airport_fee,
-    dispatch_base_id,
-    ehail_fee,
-    hail_service_flag,
-    'green' AS source_type,
-    _ingestion_month,
-    _flag_null_passenger,
-    _flag_negative_fare,
-
-    DATE_TRUNC('day', pickup_ts) AS pickup_date,
-    EXTRACT(hour FROM pickup_ts) AS pickup_hour,
-    EXTRACT(dow FROM pickup_ts) AS pickup_dayofweek,
-    DATE_TRUNC('day', dropoff_ts) AS dropoff_date,
-    (EXTRACT(epoch FROM dropoff_ts) - EXTRACT(epoch FROM pickup_ts)) / 60 AS trip_duration_minutes
-FROM l1.fact_green_trips
-
-UNION ALL
-
-SELECT
-    vendor_id,
-    affiliated_base_id,
-    pickup_ts,
-    dropoff_ts,
-    passenger_count,
-    trip_distance_mi,
-    rate_code_id,
-    shared_ride_flag,
-    store_and_fwd_flag,
-    pickup_location_id,
-    dropoff_location_id,
-    payment_type,
-    fare_amount,
-    extra_fees,
-    mta_tax,
-    tip_amount,
-    tolls_amount,
-    total_amount,
-    improvement_surcharge,
-    congestion_surcharge,
-    cbd_congestion_fee,
-    airport_fee,
-    dispatch_base_id,
-    ehail_fee,
-    hail_service_flag,
-    'fhv' AS source_type,
-    _ingestion_month,
-    _flag_null_passenger,
-    _flag_negative_fare,
-
-    DATE_TRUNC('day', pickup_ts) AS pickup_date,
-    EXTRACT(hour FROM pickup_ts) AS pickup_hour,
-    EXTRACT(dow FROM pickup_ts) AS pickup_dayofweek,
-    DATE_TRUNC('day', dropoff_ts) AS dropoff_date,
-    (EXTRACT(epoch FROM dropoff_ts) - EXTRACT(epoch FROM pickup_ts)) / 60 AS trip_duration_minutes
-FROM l1.fact_fhv_trips;
+ 
