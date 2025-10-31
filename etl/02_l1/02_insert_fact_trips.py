@@ -35,12 +35,15 @@ for tbl in l0_tables:
     if service == "yellow":
         pickup_col = "tpep_pickup_datetime"
         dropoff_col = "tpep_dropoff_datetime"
+        dropoff_loc = "DOLocationID"
     elif service == "green":
         pickup_col = "lpep_pickup_datetime"
         dropoff_col = "lpep_dropoff_datetime"
+        dropoff_loc = "DOLocationID"
     elif service == "fhv":
         pickup_col = "pickup_datetime"
         dropoff_col = "dropOff_datetime"
+        dropoff_loc = "DOlocationID"
     else:
         print(f"⚠️ Skipping unknown: {tbl}")
         continue
@@ -57,7 +60,7 @@ for tbl in l0_tables:
         "shared_ride_flag": "SR_Flag" if have(tbl, "SR_Flag") else "NULL",
         "store_and_fwd_flag": "store_and_fwd_flag" if have(tbl, "store_and_fwd_flag") else "NULL",
         "pickup_location_id": "CAST(PULocationID AS INTEGER)" if have(tbl, "PULocationID") else "NULL",
-        "dropoff_location_id": "CAST(DOLocationID AS INTEGER)" if have(tbl, "DOLocationID") else "NULL",
+        "dropoff_location_id": "CAST(DOLocationID AS INTEGER)" if have(tbl, dropoff_loc) else "NULL",
         "payment_type": "CAST(payment_type AS INTEGER)" if have(tbl, "payment_type") else "NULL",
         "fare_amount": "fare_amount" if have(tbl, "fare_amount") else "NULL",
         "extra_fees": "extra" if have(tbl, "extra") else "NULL",
