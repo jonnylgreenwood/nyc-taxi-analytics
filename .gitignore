@@ -1,0 +1,4 @@
+.venv/
+*.duckdb
+data/
+.DS_Store
